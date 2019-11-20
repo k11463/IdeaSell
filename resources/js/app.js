@@ -1,5 +1,4 @@
 import Vue from "vue";
-import '@mdi/font/css/materialdesignicons.css'
 import Vuetify from "vuetify";
 import Routes from "./routes.js";
 import App from "./views/App";
@@ -7,12 +6,6 @@ import App from "./views/App";
 require("./bootstrap");
 
 Vue.use(Vuetify);
-
-export default new Vuetify({
-    icons: {
-        iconfont: 'mdi', // default - only for display purposes
-    },
-})
 
 window.Vue = require("vue");
 

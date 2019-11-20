@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <v-row>
       <v-col lg="2"></v-col>
       <v-col lg="8">
@@ -15,7 +15,7 @@
                     placeholder="輸入Email或使用者名稱"
                     outlined
                     shaped
-                    v-model="form.email"
+                    v-model="form.account"
                   ></v-text-field>
                   <v-text-field
                     type="password"
@@ -26,9 +26,6 @@
                     v-model="form.password"
                   ></v-text-field>
                 </v-card-text>
-                <div class="errormsg" v-if="errors.length > 0">
-                  <div v-for="error in errors" :key="error">{{ error[0] }}</div>
-                </div>
                 <v-card-actions>
                   <v-btn @click="Login" :loading="isSend">登入</v-btn>
                   <v-spacer></v-spacer>
@@ -42,35 +39,47 @@
       </v-col>
       <v-col lg="2"></v-col>
     </v-row>
-  </div>
+
+    <v-dialog v-model="errorDialog" max-width="290">
+      <v-card>
+        <v-card-title class="headline">錯誤</v-card-title>
+        <v-card-text v-for="(error, id) in errors" :key="id" style="color: red">{{ error[0] }}</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="errorDialog = false">確定</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-app>
 </template>
 
 <script>
 export default {
-  mounted() {
-    console.log("Component mounted.");
-  },
   data() {
     return {
       form: {
-        email: "",
+        account: "",
         password: ""
       },
       errors: [],
-      isSend: false
+      isSend: false,
+      errorDialog: false
     };
   },
   methods: {
     Login() {
+      this.isSend = true;
       axios
         .post("/login", this.form)
         .then(res => {
           console.log(res);
         })
         .catch(err => {
+          this.isSend = false;
           if (err.response.status == 422) {
-            this.isSend = false;
             this.errors = Object.values(err.response.data.errors);
+            this.errorDialog = true;
+            // console.log(this.errors);
           }
         });
     }

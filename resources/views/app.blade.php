@@ -19,5 +19,6 @@
 <script src="/js/app.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
 
 </html>

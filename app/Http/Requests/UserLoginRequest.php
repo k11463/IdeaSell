@@ -19,7 +19,7 @@ class UserLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required',
+            'account' => 'required',
             'password' => 'required',
         ];
     }
@@ -27,7 +27,7 @@ class UserLoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => 'Email不可為空',
+            'account.required' => '帳號不可為空',
             'password.required' => '密碼不可為空',
         ];
     }

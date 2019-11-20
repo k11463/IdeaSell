@@ -19,6 +19,7 @@ class UserController extends Controller
         $user = new User;
         $user->fill($request->all());
         $user->password = $passwordHashed;
+        $user->rank = "幼稚園小班";
         $user->save();
 
         return redirect('/');
@@ -26,12 +27,14 @@ class UserController extends Controller
 
     public function login(UserLoginRequest $request, User $user)
     {
-        $findUser = $user->where('email', '=', $request->email)->firstOrFail()->get();
-        if (Hash::check($findUser->password, $request->password)) {
-            return "123";
-        }
-        // Log::info($findUser);
+        $findUser = $user->where('email', '=', $request->account)->orWhere('username', '=', $request->account)->firstOrFail()->get();
         return $findUser;
+        // return $findUserWithUsername;
+        // if (Hash::check($findUser->password, $request->password)) {
+        //     return "123";
+        // }
+        // Log::info($findUser);
+        // return $findUser;
     }
 
     public function show(User $user)
